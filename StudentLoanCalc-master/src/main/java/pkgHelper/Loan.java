@@ -15,21 +15,21 @@ public class Loan {
 	
 	private LinkedList<Payment> LoanPayments = new LinkedList<Payment>();
 	
-	public Loan(double loanAmount,double InterestRate,int termYear, double extraPayment, Date dueDate, boolean bCompoundType,double futureValue) {
+	public Loan(double la,double ir,int ty, double ep, Date dd, boolean bct,double fv) {
 		super();
 		
-		LoanAmount=loanAmount;
-		IntRate=InterestRate;
-		Term=termYear;
-		ExtraPayment=extraPayment;
-		FirstDueDate= dueDate;
-		this.bCompoundType=bCompoundType;
-		FutureValue=futureValue;
+		LoanAmount=la;
+		IntRate=ir;
+		Term=ty;
+		ExtraPayment=ep;
+		FirstDueDate= dd;
+		bCompoundType=bct;
+		FutureValue=fv;
 		
 		double dRollingBalance=this.LoanAmount;
 		int iPaymentNum=0;
 		do {
-			Payment p= new Payment(++iPaymentNum,dueDate,dRollingBalance,this);
+			Payment p= new Payment( ++iPaymentNum, dd , dRollingBalance ,this);
 			LoanPayments.add(p);
 			dRollingBalance=p.getBalance();
 			
@@ -45,25 +45,32 @@ public class Loan {
 		}while(true);
 		System.out.println(LoanPayments.size());
 	}
+	
 	public double getLoanAmount() {
 		return LoanAmount;
 	}
+	
 	public double getIntRate() {
 		return IntRate;
 	}
+	
 	public int getTerm() {
 		return Term;
 	}
+	
 	public double getExtraPayment() {
 		return ExtraPayment;
 	}
+	
 	public double getFutureValue() {
 		return FutureValue;
 	}
+	
 	public static Date parseDate(String date) {
 		try {
 			return new SimpleDateFormat("yyy-MM-dd").parse(date);
-		}catch(ParseException e) {
+		}
+		catch(ParseException e) {
 			return null;
 		}
 	}
